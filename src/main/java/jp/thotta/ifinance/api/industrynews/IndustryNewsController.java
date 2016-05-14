@@ -39,10 +39,25 @@ public class IndustryNewsController {
             Integer industryId = Integer.parseInt(industryString);
             industryList.add(industryId);
         }
-        List<News> newsList = newsManager.recentList(industryList);
+        List<News> newsList;
+        if("click".equals(sortMode)) {
+            newsList = newsManager.clickRanking(industryList);
+        } else {
+            newsList = newsManager.recentList(industryList);
+        }
         for(News news : newsList) {
             apiNewsList.add(new ApiNews(news));
         }
         return apiNewsList;
+    }
+
+    @RequestMapping("/industry_news/click_news")
+    public Boolean clickNews(@RequestParam(value="id") Long newsId) {
+        News news = newsManager.find(newsId);
+        news.incrementClicks();
+        if(newsManager.update(news)) {
+            return true;
+        }
+        return false;
     }
 }
