@@ -1,6 +1,6 @@
 package jp.thotta.ifinance.api.industrynews;
 
-import jp.thotta.ifinance.common.dao.IndustryManager;
+import jp.thotta.ifinance.common.dao.MasterDataManager;
 import jp.thotta.ifinance.common.dao.NewsManager;
 import jp.thotta.ifinance.common.entity.Industry;
 import jp.thotta.ifinance.common.entity.News;
@@ -16,7 +16,8 @@ import java.util.List;
  */
 @RestController
 public class IndustryNewsController {
-    IndustryManager industryManager = new IndustryManager();
+    MasterDataManager<Industry> industryManager
+            = new MasterDataManager<Industry>(Industry.class);
     NewsManager newsManager = new NewsManager();
 
     @RequestMapping("/industry_news/industry_list")
